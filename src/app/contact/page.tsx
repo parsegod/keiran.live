@@ -23,14 +23,23 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.1,
+      duration: 0.3,
+      ease: "easeOut"
     }
   }
 };
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut"
+    }
+  }
 };
 
 const socials: Social[] = [
@@ -136,9 +145,22 @@ BaOagAAKCRDyy+db474gYtrpAP9tLA/5wxJLAhinkQyGdhR5OEXgXjDHnI9Il/Zc
             <motion.div
               key={social.name}
               variants={item}
-              whileHover={{ scale: 1.02 }}
+              whileHover={{
+                y: -8,
+                transition: {
+                  duration: 0.3,
+                  ease: "easeOut"
+                }
+              }}
+              style={{
+                willChange: "transform",
+                transform: "translate3d(0, 0, 0)",
+                backfaceVisibility: "hidden",
+                WebkitFontSmoothing: "subpixel-antialiased",
+                perspective: 1000
+              }}
               whileTap={{ scale: 0.98 }}
-              className="group relative bg-zinc-900 rounded-lg p-6 border border-zinc-800 hover:border-zinc-700 transition-all hover:shadow-lg hover:shadow-zinc-800/50"
+              className="group relative bg-zinc-900 rounded-lg p-6 border border-zinc-800 hover:border-zinc-700"
             >
               <Link href={social.link} target="_blank" className="block">
                 <div className="flex items-center gap-4">

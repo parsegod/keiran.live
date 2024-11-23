@@ -10,14 +10,23 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.1,
+      duration: 0.3,
+      ease: "easeOut"
     }
   }
 };
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut"
+    }
+  }
 };
 
 const projects = [
@@ -60,19 +69,35 @@ export default function Projects() {
           <motion.div
             key={index}
             variants={item}
-            className="relative bg-zinc-900 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:shadow-lg hover:shadow-zinc-800/50 group hover:z-10"
+            whileHover={{ 
+              y: -8,
+              scale: 1.02,
+              transition: {
+                duration: 0.2,
+                ease: "easeOut"
+              }
+            }}
+            style={{
+              willChange: "transform",
+              backfaceVisibility: "hidden",
+              WebkitFontSmoothing: "subpixel-antialiased"
+            }}
+            className="relative bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800"
           >
-            <div className="relative h-48">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover transform group-hover:scale-110 transition-transform duration-300 rounded-t-lg"
-              />
-            </div>
+            <Link href={project.demo} target="_blank">
+              <div className="relative aspect-video overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover transform-gpu transition-transform duration-200 ease-out hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            </Link>
             <div className="flex flex-col h-[calc(100%-12rem)]">
               <div className="p-6 flex-1">
-                <h3 className="text-xl font-semibold group-hover:text-white transition-colors mb-4">{project.title}</h3>
+                <h3 className="text-xl font-semibold text-zinc-100 mb-4">{project.title}</h3>
                 <p className="text-zinc-400">{project.description}</p>
               </div>
               <div className="p-6 pt-0 space-y-4">
@@ -80,7 +105,7 @@ export default function Projects() {
                   {project.tags.map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
-                      className="px-3 py-1 bg-zinc-800 text-zinc-300 rounded-full text-sm hover:bg-zinc-700 transition-colors"
+                      className="px-3 py-1 bg-zinc-800 text-zinc-300 rounded-full text-sm"
                     >
                       {tag}
                     </span>

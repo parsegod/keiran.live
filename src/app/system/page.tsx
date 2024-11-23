@@ -1,7 +1,31 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, MemoryStick, HardDrive, Monitor, Keyboard, Mouse } from "lucide-react";
+import { Terminal, Code2, Cpu, Wrench, Cog, Layers, MemoryStick, HardDrive, Monitor, Keyboard, Mouse } from "lucide-react";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      duration: 0.3,
+      ease: "easeOut"
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut"
+    }
+  }
+};
 
 const systemInfo = {
   cpu: {
@@ -30,20 +54,44 @@ const systemInfo = {
   }
 };
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
+const systems = [
+  {
+    title: "Development Environment",
+    description: "My primary development setup includes Arch Linux, the Fish shell, kitty terminal emulator and Neovim with the lazyvim plugin manager. I use Windows Terminal with Oh My Zsh for a customized shell experience.",
+    icon: Terminal,
+    color: "text-green-500"
+  },
+  {
+    title: "Languages & Frameworks",
+    description: "Proficient in TypeScript, Python, Go, Java, C, Rust and more. Experienced with React, Next.js, and various backend frameworks. Currently exploring systems programming.",
+    icon: Code2,
+    color: "text-blue-500"
+  },
+  {
+    title: "Hardware Setup",
+    description: "Custom-built PC with AMD Ryzen 9 5950X, 64GB RAM, and NVIDIA RTX 4090. Multiple monitors for enhanced productivity and development workflow.",
+    icon: Cpu,
+    color: "text-red-500"
+  },
+  {
+    title: "Tools & Utilities",
+    description: "Git for version control, Docker for containerization, and various CLI tools like ripgrep and fd. Extensive use of shell scripts for automation.",
+    icon: Wrench,
+    color: "text-yellow-500"
+  },
+  {
+    title: "Build & Deploy",
+    description: "CI/CD with GitHub Actions, containerization with Docker, and deployment on various cloud platforms including AWS and Vercel.",
+    icon: Cog,
+    color: "text-purple-500"
+  },
+  {
+    title: "Tech Stack",
+    description: "Full-stack development with Next.js, TypeScript, and Tailwind CSS. Database experience with PostgreSQL, MongoDB, and Redis.",
+    icon: Layers,
+    color: "text-indigo-500"
   }
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-};
+];
 
 export default function System() {
   return (
@@ -51,12 +99,12 @@ export default function System() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         className="space-y-4"
       >
-        <h1 className="text-4xl font-bold">My Setup</h1>
+        <h1 className="text-4xl font-bold">My System</h1>
         <p className="text-xl text-zinc-400 max-w-2xl">
-          Here&apos;s what I use to get things done
+          An overview of my development environment, tools, and technologies I work with
         </p>
       </motion.div>
 
@@ -66,75 +114,74 @@ export default function System() {
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
       >
-        <motion.div variants={item} className="bg-zinc-900 rounded-lg p-6 space-y-4 border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:shadow-xl hover:shadow-zinc-800/50 group hover:-translate-y-2">
-          <div className="flex items-center gap-3">
-            <Cpu className="w-6 h-6 text-indigo-500 group-hover:scale-110 transition-transform duration-300" />
-            <h2 className="text-lg font-semibold group-hover:text-white transition-colors">{systemInfo.cpu.name}</h2>
-          </div>
-          <div className="space-y-2">
-            <p className="text-zinc-300">{systemInfo.cpu.name}</p>
-            <p className="text-zinc-400 text-sm">{systemInfo.cpu.cores}</p>
-            <p className="text-zinc-400 text-sm">{systemInfo.cpu.speed}</p>
-          </div>
-        </motion.div>
+        {systems.map((system) => (
+          <motion.div
+            key={system.title}
+            variants={item}
+            whileHover={{ 
+              y: -8,
+              transition: {
+                duration: 0.2,
+                ease: "easeOut"
+              }
+            }}
+            style={{
+              willChange: "transform",
+              backfaceVisibility: "hidden",
+              WebkitFontSmoothing: "subpixel-antialiased"
+            }}
+            className="bg-zinc-900 rounded-lg p-6 space-y-4 border border-zinc-800"
+          >
+            <div className="flex items-center gap-3">
+              <system.icon className={`w-6 h-6 ${system.color}`} />
+              <h2 className="text-lg font-semibold text-zinc-100">{system.title}</h2>
+            </div>
+            <p className="text-zinc-400">{system.description}</p>
+          </motion.div>
+        ))}
+      </motion.div>
 
-        <motion.div variants={item} className="bg-zinc-900 rounded-lg p-6 space-y-4 border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:shadow-xl hover:shadow-zinc-800/50 group hover:-translate-y-2">
-          <div className="flex items-center gap-3">
-            <Monitor className="w-6 h-6 text-purple-500 group-hover:scale-110 transition-transform duration-300" />
-            <h2 className="text-lg font-semibold group-hover:text-white transition-colors">{systemInfo.gpu.name}</h2>
-          </div>
-          <div className="space-y-2">
-            <p className="text-zinc-300">{systemInfo.gpu.name}</p>
-            <p className="text-zinc-400 text-sm">{systemInfo.gpu.vram}</p>
-            <p className="text-zinc-400 text-sm">{systemInfo.gpu.resolution}</p>
-          </div>
-        </motion.div>
-
-        <motion.div variants={item} className="bg-zinc-900 rounded-lg p-6 space-y-4 border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:shadow-xl hover:shadow-zinc-800/50 group hover:-translate-y-2">
-          <div className="flex items-center gap-3">
-            <MemoryStick className="w-6 h-6 text-pink-500 group-hover:scale-110 transition-transform duration-300" />
-            <h2 className="text-lg font-semibold group-hover:text-white transition-colors">{systemInfo.ram.total}</h2>
-          </div>
-          <div className="space-y-2">
-            <p className="text-zinc-300">{systemInfo.ram.total}</p>
-            <p className="text-zinc-400 text-sm">{systemInfo.ram.speed}</p>
-            <p className="text-zinc-400 text-sm">{systemInfo.ram.config}</p>
-          </div>
-        </motion.div>
-
-        <motion.div variants={item} className="bg-zinc-900 rounded-lg p-6 space-y-4 border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:shadow-xl hover:shadow-zinc-800/50 group hover:-translate-y-2">
-          <div className="flex items-center gap-3">
-            <HardDrive className="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform duration-300" />
-            <h2 className="text-lg font-semibold group-hover:text-white transition-colors">{systemInfo.storage.primary}</h2>
-          </div>
-          <div className="space-y-2">
-            <p className="text-zinc-300">{systemInfo.storage.primary}</p>
-            <p className="text-zinc-400 text-sm">{systemInfo.storage.secondary}</p>
-            <p className="text-zinc-400 text-sm">{systemInfo.storage.backup}</p>
-          </div>
-        </motion.div>
-
-        <motion.div variants={item} className="bg-zinc-900 rounded-lg p-6 space-y-4 border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:shadow-xl hover:shadow-zinc-800/50 group hover:-translate-y-2">
-          <div className="flex items-center gap-3">
-            <Keyboard className="w-6 h-6 text-green-500 group-hover:scale-110 transition-transform duration-300" />
-            <h2 className="text-lg font-semibold group-hover:text-white transition-colors">{systemInfo.peripherals.keyboard}</h2>
-          </div>
-          <div className="space-y-2">
-            <p className="text-zinc-300">{systemInfo.peripherals.keyboard}</p>
-            <p className="text-zinc-400 text-sm">60% Wireless Mechanical Keyboard</p>
-          </div>
-        </motion.div>
-
-        <motion.div variants={item} className="bg-zinc-900 rounded-lg p-6 space-y-4 border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:shadow-xl hover:shadow-zinc-800/50 group hover:-translate-y-2">
-          <div className="flex items-center gap-3">
-            <Mouse className="w-6 h-6 text-yellow-500 group-hover:scale-110 transition-transform duration-300" />
-            <h2 className="text-lg font-semibold group-hover:text-white transition-colors">{systemInfo.peripherals.mouse}</h2>
-          </div>
-          <div className="space-y-2">
-            <p className="text-zinc-300">{systemInfo.peripherals.mouse}</p>
-            <p className="text-zinc-400 text-sm">Wireless gaming mouse</p>
-          </div>
-        </motion.div>
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
+      >
+        {Object.entries(systemInfo).map(([key, info], index) => (
+          <motion.div 
+            key={key}
+            variants={item} 
+            className="bg-zinc-900 rounded-lg p-6 space-y-4 border border-zinc-800 group"
+            whileHover={{ 
+              y: -8,
+              transition: {
+                duration: 0.2,
+                ease: "easeOut"
+              }
+            }}
+            style={{
+              willChange: "transform",
+              backfaceVisibility: "hidden",
+              WebkitFontSmoothing: "subpixel-antialiased"
+            }}
+          >
+            <div className="flex items-center gap-3">
+              {key === 'cpu' && <Cpu className="w-6 h-6 text-indigo-500" />}
+              {key === 'gpu' && <Monitor className="w-6 h-6 text-purple-500" />}
+              {key === 'ram' && <MemoryStick className="w-6 h-6 text-pink-500" />}
+              {key === 'storage' && <HardDrive className="w-6 h-6 text-blue-500" />}
+              {key === 'peripherals' && <Keyboard className="w-6 h-6 text-green-500" />}
+              <h2 className="text-lg font-semibold text-zinc-100">{Object.values(info)[0]}</h2>
+            </div>
+            <div className="space-y-2">
+              {Object.values(info).map((value, i) => (
+                <p key={i} className={i === 0 ? "text-zinc-300" : "text-zinc-400 text-sm"}>
+                  {value}
+                </p>
+              ))}
+            </div>
+          </motion.div>
+        ))}
       </motion.div>
     </div>
   );
