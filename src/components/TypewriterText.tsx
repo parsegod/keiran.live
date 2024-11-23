@@ -13,7 +13,6 @@ export default function TypewriterText({ text, delay = 50, className = "" }: Typ
   const [showCaret, setShowCaret] = useState(true);
   const [isReady, setIsReady] = useState(false);
 
-  // Wait for text to be ready
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsReady(true);
@@ -29,7 +28,7 @@ export default function TypewriterText({ text, delay = 50, className = "" }: Typ
     let currentIndex = 0;
     const typingTimer = setInterval(() => {
       if (currentIndex < text.length) {
-        setDisplayedText(0, currentIndex + 1);
+        setDisplayedText(text.slice(0, currentIndex + 1));
         currentIndex++;
       } else {
         clearInterval(typingTimer);
