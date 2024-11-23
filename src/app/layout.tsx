@@ -7,6 +7,7 @@ import { GridBackground } from "@/components/GridBackground";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://keiran.live'),
   title: "My bio :3",
   description: "Got bored and made this lol",
   icons: {
