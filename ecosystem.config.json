@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "keiran.cc",
+      "script": "pnpm",
+      "args": "start",
+      "cwd": "/home/keiran/keiran.cc/",
+      "watch": false,
+      "ignore_watch": 'public/uploads/chunks',
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

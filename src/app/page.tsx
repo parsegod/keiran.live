@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Github, Mail } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -71,7 +71,7 @@ export default function Home() {
           >
             <h1 className="text-5xl sm:text-6xl font-bold">
               <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                Hey, I'm Keiran
+                Hey, I&apos;m Keiran
               </span>
               <motion.span
                 initial={{ rotate: 0 }}

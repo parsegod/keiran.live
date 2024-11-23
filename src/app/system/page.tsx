@@ -56,7 +56,7 @@ export default function System() {
       >
         <h1 className="text-4xl font-bold">My Setup</h1>
         <p className="text-xl text-zinc-400 max-w-2xl">
-          Here's what I use to get things done
+          Here&apos;s what I use to get things done
         </p>
       </motion.div>
 
