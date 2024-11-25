@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ShortUrl {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  url       String
+  createdAt DateTime @default(now())
+  expiresAt DateTime?
+  clicks    Int      @default(0)
+  isCustom  Boolean  @default(false)
+  userId    String?  // For future auth integration
+  
+  // Analytics
+  lastClickedAt DateTime?
+  referrers     ClickReferrer[]
+  userAgents    ClickUserAgent[]
+  locations     ClickLocation[]
+  
+  @@index([code])
+  @@index([expiresAt])
+}
+
+model ClickReferrer {
+  id         Int      @id @default(autoincrement())
+  shortUrlId Int
+  referrer   String
+  count      Int      @default(0)
+  shortUrl   ShortUrl @relation(fields: [shortUrlId], references: [id])
+  
+  @@unique([shortUrlId, referrer])
+}
+
+model ClickUserAgent {
+  id         Int      @id @default(autoincrement())
+  shortUrlId Int
+  userAgent  String
+  count      Int      @default(0)
+  shortUrl   ShortUrl @relation(fields: [shortUrlId], references: [id])
+  
+  @@unique([shortUrlId, userAgent])
+}
+
+model ClickLocation {
+  id         Int      @id @default(autoincrement())
+  shortUrlId Int
+  country    String
+  count      Int      @default(0)
+  shortUrl   ShortUrl @relation(fields: [shortUrlId], references: [id])
+  
+  @@unique([shortUrlId, country])
+}
+
+model RateLimit {
+  id        Int      @id @default(autoincrement())
+  ip        String
+  count     Int      @default(0)
+  resetAt   DateTime
+  
+  @@unique([ip])
+  @@index([resetAt])
+}

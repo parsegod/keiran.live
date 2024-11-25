@@ -32,7 +32,7 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       backgroundImage: {
-        "grid": "linear-gradient(to right, rgb(161 161 170 / 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgb(161 161 170 / 0.1) 1px, transparent 1px)",
+        "grid": "linear-gradient(to right, rgb(161 161 170 / 0.2) 1px, transparent 1px), linear-gradient(to bottom, rgb(161 161 170 / 0.2) 1px, transparent 1px)",
       },
     },
   },

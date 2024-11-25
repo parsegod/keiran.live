@@ -32,27 +32,59 @@ const item = {
 const projects = [
   {
     title: "AnonHost",
-    description: "A beautiful (and free) image host built with Next.js and TypeScript.",
+    description: "A beautiful (and free) image host using a custom file chunking algorithm to circumvent cloudflare's entity limit",
     image: "/anonhost.png",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
-    github: "https://github.com/KeiranScript/keiran.cc",
+    github: "https://github.com/keirancc/keiran.cc",
     demo: "https://keiran.cc"
   },
   {
-    title: "uwurs",
-    description: "A rust library dedicated to providing text transformation for weebs",
-    image: "/uwurs.png",
-    tags: ["Rust", "Cargo", "Git", ],
-    github: "https://github.com/KeiranScript/uwurs",
-    demo: "https://crates.io/crates/uwurs"
+    title: "E-ZDocs",
+    description: "A user-friendly documentation site built with Next.js, Tailwind CSS and a whole lot of caffeine",
+    image: "/e-zdocs.png",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+    github: "https://github.com/keirancc/e-zdocs",
+    demo: "https://e-z.software"
+  },
+  {
+    title: "KeiranHost",
+    description: "An intentionally simple image host developed to have as little latency as possible",
+    image: "/keiranhost.png",
+    tags: ["Vite", "TypeScript", "Tailwind CSS"],
+    github: "https://github.com/keirancc/keiranhost",
+    demo: "https://github.com/keirancc/keiranhost"
   },
   {
     title: "Archium",
     description: "A fork of the Archie project, aiming to provide \"Fast & Easy Package Management for Arch Linux\"",
     image: "/archium.png",
     tags: ["C", "Make", "Git", "Pacman"],
-    github: "https://github.com/KeiranScript/Archium",
-    demo: "https://github.com/KeiranScript/Archium"
+    github: "https://github.com/keirancc/Archium",
+    demo: "https://github.com/keirancc/Archium"
+  },
+  {
+    title: "nekohash",
+    description: "A kawaii cryptographic hashing library written in rust, making use of AES-256 and more",
+    image: "/nekohash.png",
+    tags: ["Rust", "Cargo", "Git"],
+    github: "https://github.com/keirancc/nekohash",
+    demo: "https://github.com/keirancc/nekohash"
+  },
+  {
+    title: "uwurs",
+    description: "A rust library dedicated to providing text transformation for weebs",
+    image: "/uwurs.png",
+    tags: ["Rust", "Cargo", "Git"],
+    github: "https://github.com/keirancc/uwurs",
+    demo: "https://github.com/keirancc/uwurs"
+  },
+  {
+    title: "yalc",
+    description: "Yet Another Logging Crate - a simple logging library for rust",
+    image: "/yalc.png",
+    tags: ["Rust", "Cargo", "Git"],
+    github: "https://github.com/keirancc/yalc",
+    demo: "https://github.com/keirancc/yalc"
   },
 ];
 

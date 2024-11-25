@@ -8,20 +8,20 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://keiran.live'),
-  title: "My bio :3",
-  description: "Got bored and made this lol",
+  title: "Keiran",
+  description: "My personal bio and portfolio",
   icons: {
     icon: "/profile.gif",
   },
   openGraph: {
     images: "/profile.gif",
-    title: "My bio :3",
-    description: "Got bored and made this lol",
+    title: "Keiran",
+    description: "My personal bio and portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "My bio :3",
-    description: "Got bored and made this lol",
+    title: "Keiran",
+    description: "My personal bio and portfolio",
     images: "/profile.gif",
   },
   robots: {
