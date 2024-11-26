@@ -66,7 +66,7 @@ export default function Home() {
             transition={{ delay: 0.3, duration: 0.5 }}
           >
             <Image
-              src="/profile.gif"
+              src="/profile.png"
               alt="Profile Picture"
               fill
               className="object-cover"
