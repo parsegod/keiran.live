@@ -51,7 +51,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'URL is required' }, { status: 400 });
     }
 
-    // Validate and sanitize URL
     let sanitizedUrl: string;
     try {
       sanitizedUrl = sanitizeUrl(url);
@@ -59,10 +58,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid URL provided' }, { status: 400 });
     }
 
-    // Generate unique code
     const code = await generateUniqueCode();
 
-    // Create short URL
     const shortUrl = await prisma.shortUrl.create({
       data: {
         code,

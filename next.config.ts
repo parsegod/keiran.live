@@ -2,11 +2,17 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: ["https://keiran.live/*"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "keiran.live",
+        port: "",
+      },
+    ],
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // typescript: {
+  //   ignoreBuildErrors: true,
+  // },
 };
 
 export default nextConfig;

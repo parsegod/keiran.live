@@ -5,12 +5,9 @@ import { type NextRequest } from 'next/server';
 async function updateAnalytics(shortUrlId: number, request: NextRequest) {
   const referrer = request.headers.get('referer') || 'direct';
   const userAgent = request.headers.get('user-agent') || 'unknown';
-  // You could add a proper geo-location service here
   const country = request.headers.get('x-vercel-ip-country') || 'unknown';
 
-  // Update analytics in parallel
   await Promise.all([
-    // Update referrer
     prisma.clickReferrer.upsert({
       where: {
         shortUrlId_referrer: { shortUrlId, referrer },
@@ -24,7 +21,6 @@ async function updateAnalytics(shortUrlId: number, request: NextRequest) {
         count: { increment: 1 },
       },
     }),
-    // Update user agent
     prisma.clickUserAgent.upsert({
       where: {
         shortUrlId_userAgent: { shortUrlId, userAgent },
@@ -38,7 +34,6 @@ async function updateAnalytics(shortUrlId: number, request: NextRequest) {
         count: { increment: 1 },
       },
     }),
-    // Update location
     prisma.clickLocation.upsert({
       where: {
         shortUrlId_country: { shortUrlId, country },
@@ -57,10 +52,10 @@ async function updateAnalytics(shortUrlId: number, request: NextRequest) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { code: string } }
+  { params }: { params: Promise<{ code: string }> }
 ) {
   try {
-    const code = await params.code;
+    const { code } = await params;
 
     if (!code) {
       return NextResponse.json(
@@ -80,7 +75,6 @@ export async function GET(
       );
     }
 
-    // Check if URL has expired
     if (shortUrl.expiresAt && shortUrl.expiresAt < new Date()) {
       return NextResponse.json(
         { error: 'URL has expired' },
@@ -88,16 +82,14 @@ export async function GET(
       );
     }
 
-    // Update click count
     await prisma.shortUrl.update({
       where: { code },
       data: { clicks: { increment: 1 } },
     });
 
-    // Update analytics asynchronously
     updateAnalytics(shortUrl.id, request).catch(console.error);
 
-    return NextResponse.redirect(shortUrl.url, { status: 307 });
+    return NextResponse.redirect(shortUrl.url);
   } catch (error) {
     console.error('Error retrieving URL:', error);
     return NextResponse.json(
