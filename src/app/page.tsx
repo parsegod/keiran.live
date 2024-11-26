@@ -1,9 +1,8 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { useRef } from "react";
 import {
   IconBrandGithub,
   IconBrandDiscord,
@@ -23,9 +22,6 @@ const quotes = [
 ];
 
 export default function Home() {
-  const skillsRef = useRef(null);
-  const isInView = useInView(skillsRef, { once: true, margin: "-100px" });
-
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="space-y-16">

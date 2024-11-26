@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Terminal, Code2, Cpu, Wrench, Cog, Layers, MemoryStick, HardDrive, Monitor, Keyboard, Mouse } from "lucide-react";
+import { Terminal, Code2, Cpu, Wrench, Cog, Layers, MemoryStick, HardDrive, Monitor, Keyboard } from "lucide-react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -147,7 +147,7 @@ export default function System() {
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
       >
-        {Object.entries(systemInfo).map(([key, info], index) => (
+        {Object.entries(systemInfo).map(([key, info]) => (
           <motion.div 
             key={key}
             variants={item} 

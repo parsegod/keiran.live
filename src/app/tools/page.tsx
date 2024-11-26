@@ -11,7 +11,6 @@ const tools = [
     href: "/tools/shortener",
     icon: <IconLink className="w-6 h-6" />,
   },
-  // Add more tools here as they are created
 ];
 
 export default function Tools() {
@@ -20,7 +19,7 @@ export default function Tools() {
       <div className="space-y-8">
         <div>
           <h1 className="text-3xl font-bold">Tools</h1>
-          <p className="text-zinc-400 mt-2">A collection of useful tools I've created</p>
+          <p className="text-zinc-400 mt-2">A collection of useful tools I&apos;ve created</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
