@@ -26,9 +26,9 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-zinc-950/75 backdrop-blur-md border-b border-zinc-800/50">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-2xl rounded-full bg-zinc-950/25 backdrop-blur border border-white/10 shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)]">
+      <div className="px-4 sm:px-6">
+        <div className="flex h-12 items-center justify-between">
           <Link
             href="/"
             className="text-xl font-bold relative group transition-all duration-300"
@@ -53,10 +53,10 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-4 py-2 text-sm font-medium transition-colors rounded-md ${
+                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${
                   pathname === item.href
-                    ? "text-zinc-100 bg-zinc-800/50"
-                    : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
+                    ? "text-zinc-100 bg-white/10"
+                    : "text-zinc-400 hover:text-zinc-100 hover:bg-white/5"
                 }`}
               >
                 {item.name}

@@ -95,36 +95,36 @@ export default function Home() {
             <Link 
               href="https://github.com/KeiranScript" 
               target="_blank"
-              className="p-2 text-zinc-400 hover:text-zinc-100 transition-colors"
+              className="p-2 text-zinc-500 group transition-colors"
             >
-              <IconBrandGithub size={24} />
+              <IconBrandGithub size={24} className="transition-all duration-300 group-hover:stroke-[#ffffff] group-hover:stroke-[1.5]" />
             </Link>
             <Link 
               href="https://bsky.app/profile/keiran.cc" 
               target="_blank"
-              className="p-2 text-zinc-400 hover:text-zinc-100 transition-colors"
+              className="p-2 text-zinc-500 group transition-colors"
             >
-              <IconBrandBluesky size={24} />
+              <IconBrandBluesky size={24} className="transition-all duration-300 group-hover:stroke-[#0095f6] group-hover:stroke-[1.5]" />
             </Link>
             <Link 
               href="mailto:me@keiran.cc"
-              className="p-2 text-zinc-400 hover:text-zinc-100 transition-colors"
+              className="p-2 text-zinc-500 group transition-colors"
             >
-              <IconMail size={24} />
+              <IconMail size={24} className="transition-all duration-300 group-hover:stroke-[#ea580c] group-hover:stroke-[1.5]" />
             </Link>
             <Link 
               href="https://youtube.com/@keiranscript" 
               target="_blank"
-              className="p-2 text-zinc-400 hover:text-zinc-100 transition-colors"
+              className="p-2 text-zinc-500 group transition-colors"
             >
-              <IconBrandYoutube size={24} />
+              <IconBrandYoutube size={24} className="transition-all duration-300 group-hover:stroke-[#ff0033] group-hover:stroke-[1.5]" />
             </Link>
             <Link 
               href="https://discord.com/users/1230319937155760131" 
               target="_blank"
-              className="p-2 text-zinc-400 hover:text-zinc-100 transition-colors"
+              className="p-2 text-zinc-500 group transition-colors"
             >
-              <IconBrandDiscord size={24} />
+              <IconBrandDiscord size={24} className="transition-all duration-300 group-hover:stroke-[#5865f2] group-hover:stroke-[1.5]" />
             </Link>
           </motion.div>
         </div>
