@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const scriptPath = path.join(process.cwd(), 'src', 'app', 'api', 'python', 'e-z.py');
     
     const result = await new Promise((resolve, reject) => {
-      const process = spawn('python', [scriptPath, username]);
+      const process = spawn('python3', [scriptPath, username]);
       let output = '';
       let error = '';
 
