@@ -190,7 +190,7 @@ BaOagAAKCRDyy+db474gYtrpAP9tLA/5wxJLAhinkQyGdhR5OEXgXjDHnI9Il/Zc
           opacity: isInView ? 1 : 0,
           transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s"
         }}
-        className="mt-24"
+        className="mt-24 hidden"
       >
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold mb-6">How to Send an Encrypted Message</h2>
