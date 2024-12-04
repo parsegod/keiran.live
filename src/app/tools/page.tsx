@@ -9,9 +9,30 @@ const tools = [
     name: "URL Shortener",
     description: "Create short, memorable links for your long URLs",
     href: "/tools/shortener",
-    icon: <IconLink className="w-6 h-6" />,
+    icon: IconLink,
   },
+  {
+    name: "E-Z Stats Fetcher",
+    description: "Get info regarding any e-z.bio user",
+    href: "/tools/e-z",
+    icon: IconLink,
+  }
 ];
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
 
 export default function Tools() {
   return (
@@ -22,10 +43,16 @@ export default function Tools() {
           <p className="text-zinc-400 mt-2">A collection of useful tools I&apos;ve created</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <motion.div 
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           {tools.map((tool) => (
             <motion.div
               key={tool.name}
+              variants={item}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.02 }}
@@ -36,7 +63,7 @@ export default function Tools() {
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
                   <div className="p-2 rounded-lg bg-zinc-800 group-hover:bg-zinc-700 transition-colors duration-300">
-                    {tool.icon}
+                    <tool.icon className="w-6 h-6" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold group-hover:text-zinc-100 transition-colors duration-300">
@@ -51,7 +78,7 @@ export default function Tools() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
