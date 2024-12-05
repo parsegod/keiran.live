@@ -1,21 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { IconArrowLeft } from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
+import { AnalyticsData } from "@/types/analytics";
 
 export default function URLShortener() {
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+  const [shortCode, setShortCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [isLoadingAnalytics, setIsLoadingAnalytics] = useState(false);
+
+  const fetchAnalytics = async (code: string) => {
+    try {
+      setIsLoadingAnalytics(true);
+      const response = await fetch(`/api/analytics/${code}`);
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch analytics");
+      }
+
+      setAnalytics(data);
+    } catch (err) {
+      console.error("Error fetching analytics:", err);
+    } finally {
+      setIsLoadingAnalytics(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
     setShortUrl("");
+    setShortCode("");
+    setAnalytics(null);
+
+    const payload = { url };
+    console.log('Sending request with payload:', payload);
 
     try {
       const response = await fetch("/api/shorten", {
@@ -23,22 +50,39 @@ export default function URLShortener() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify(payload),
       });
 
+      console.log('Response status:', response.status);
       const data = await response.json();
+      console.log('Response data:', data);
       
       if (!response.ok) {
         throw new Error(data.error || "Failed to shorten URL");
       }
 
       setShortUrl(data.shortUrl);
+      setShortCode(data.code);
+      
+      // Fetch initial analytics
+      await fetchAnalytics(data.code);
     } catch (err) {
+      console.error('Error in handleSubmit:', err);
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!shortCode) return;
+
+    const interval = setInterval(() => {
+      fetchAnalytics(shortCode);
+    }, 30000); // Refresh every 30 seconds
+
+    return () => clearInterval(interval);
+  }, [shortCode]);
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -107,6 +151,13 @@ export default function URLShortener() {
                   Copy
                 </button>
               </div>
+              <Link
+                href={`/tools/analytics?code=${shortCode}`}
+                className="mt-4 text-sm text-zinc-400 hover:text-zinc-300 transition-colors flex items-center gap-1"
+              >
+                View Analytics
+                <IconArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           )}
         </div>

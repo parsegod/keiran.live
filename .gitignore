@@ -41,3 +41,5 @@ yarn-error.log*
 next-env.d.ts
 
 prisma/migrations
+src/app/api/e-z/.cache.json
+src/app/api/go/e-z/main.exe

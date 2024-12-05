@@ -2,80 +2,46 @@ import cloudscraper
 from bs4 import BeautifulSoup
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor
 
 def get_user_data(username):
     try:
-        scraper = cloudscraper.create_scraper()
-        response = scraper.get(f"https://e-z.bio/{username}")
-        soup = BeautifulSoup(response.text, "html.parser")
+        with cloudscraper.create_scraper() as scraper:
+            response = scraper.get(f"https://e-z.bio/{username}")
+            soup = BeautifulSoup(response.text, "html.parser")
 
         script_tag = soup.find("script", id="__NEXT_DATA__")
         if not script_tag:
             return {"error": "User not found"}
 
-        data = json.loads(script_tag.string)
-        bio_data = data["props"]["pageProps"]["bio"]
+        bio_data = json.loads(script_tag.string)["props"]["pageProps"]["bio"]
 
-        user_info = {
-            "username": username,
-            "name": bio_data.get("name", username),
-            "views": bio_data.get("views", 0),
-            "description": bio_data.get("description", ""),
-            "title": bio_data.get("title", ""),
-            "ranks": bio_data.get("ranks", []),
-            "presence": {
-                "status": bio_data.get("bio_presence", {}).get("status", "offline"),
-                "custom_status": bio_data.get("bio_presence", {}).get("customStatus", None),
-                "platform": bio_data.get("bio_presence", {}).get("platform", {}),
-                "discord_badges": bio_data.get("bio_presence", {}).get("badges", []),
-                "discord_tag": bio_data.get("bio_presence", {}).get("tag", None),
-            },
-            "profile": {
-                "pfp_url": bio_data.get("pfp", {}).get("url", ""),
-                "banner_url": bio_data.get("banner", {}).get("url", ""),
-                "background_url": bio_data.get("background", {}).get("url", ""),
-                "background_type": bio_data.get("background", {}).get("type", ""),
-            },
-            "socials": [
-                {
-                    "name": social.get("name", ""),
-                    "url": social.get("url", "")
-                }
-                for social in bio_data.get("socials", [])
-            ],
-            "custom_links": [
-                {
-                    "name": link.get("name", ""),
-                    "url": link.get("url", ""),
-                    "icon": link.get("icon", "")
-                }
-                for link in bio_data.get("customLinks", [])
-            ],
-            "songs": [
-                {
-                    "name": song.get("name", ""),
-                    "url": song.get("url", "")
-                }
-                for song in bio_data.get("songs", [])
-            ],
-            "theme": {
-                "primary_color": bio_data.get("primarycolor", ""),
-                "secondary_color": bio_data.get("secondarycolor", ""),
-                "accent_color": bio_data.get("accentcolor", ""),
-                "text_color": bio_data.get("textcolor", ""),
-                "background_color": bio_data.get("backgroundcolor", ""),
-                "icon_color": bio_data.get("iconcolor", ""),
-                "font": bio_data.get("font", ""),
-            },
-            "features": {
-                "animated_title": bio_data.get("animatedTitle", False),
-                "presence_enabled": bio_data.get("presence", False),
-                "show_views": bio_data.get("showViews", False),
-                "show_badges": bio_data.get("showBadges", False),
-                "typewriter": bio_data.get("typewriter", False),
-                "glow": bio_data.get("glow", False),
+        def extract_data(key, default):
+            return bio_data.get(key, default)
+
+        with ThreadPoolExecutor() as executor:
+            user_info = {
+                "username": username,
+                "name": extract_data("name", username),
+                "views": extract_data("views", 0),
+                "description": extract_data("description", ""),
+                "title": extract_data("title", ""),
+                "ranks": extract_data("ranks", []),
+                "presence": extract_data("bio_presence", {
+                    "status": "offline", "custom_status": None, "platform": {},
+                    "badges": [], "activities": [], "pfp": None, "tag": None, "_id": None
+                }),
+                "profile": {k: extract_data(k, {}) for k in ["pfp", "banner", "background"]},
+                "socials": [{"name": s.get("name", ""), "url": s.get("url", "")} for s in extract_data("socials", [])],
+                "custom_links": [{"name": l.get("name", ""), "url": l.get("url", ""), "icon": l.get("icon", "")} for l in extract_data("customLinks", [])],
+                "songs": [{"name": s.get("name", ""), "url": s.get("url", "")} for s in extract_data("songs", [])],
+                "theme": {f"{k}_color": extract_data(f"{k}color", "") for k in ["primary", "secondary", "accent", "text", "background", "icon"]} | {"font": extract_data("font", "")},
+                "features": {k: extract_data(v, False) for k, v in {
+                    "animated_title": "animatedTitle", "presence_enabled": "presence",
+                    "show_views": "showViews", "show_badges": "showBadges",
+                    "typewriter": "typewriter", "glow": "glow"
+                }.items()}
             }
-        }
 
         return user_info
     except Exception as e:
@@ -85,7 +51,4 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print(json.dumps({"error": "Username required"}))
         sys.exit(1)
-
-    username = sys.argv[1]
-    result = get_user_data(username)
-    print(json.dumps(result))
+    print(json.dumps(get_user_data(sys.argv[1])))

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { IconArrowRight, IconLink } from "@tabler/icons-react";
+import { IconArrowRight, IconLink, IconChartBar } from "@tabler/icons-react";
 
 const tools = [
   {
@@ -10,6 +10,12 @@ const tools = [
     description: "Create short, memorable links for your long URLs",
     href: "/tools/shortener",
     icon: IconLink,
+  },
+  {
+    name: "Shortener Analytics",
+    description: "View detailed analytics for your shortened URLs",
+    href: "/tools/analytics",
+    icon: IconChartBar,
   },
   {
     name: "E-Z Stats Fetcher",
