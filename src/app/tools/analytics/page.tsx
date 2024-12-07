@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { AnalyticsData } from "@/types/analytics";
 
-const REFRESH_INTERVAL = 5000; // 5 seconds for more real-time updates
+const REFRESH_INTERVAL = 5000; // 5 seconds
 
 const formatDate = (date: Date | string | undefined) => {
   if (!date) return "Never";

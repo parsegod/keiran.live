@@ -12,6 +12,8 @@ export default function TypewriterText({ text, delay = 50, className = "" }: Typ
   const [displayedText, setDisplayedText] = useState("");
   const [showCaret, setShowCaret] = useState(true);
   const [isReady, setIsReady] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,8 +25,30 @@ export default function TypewriterText({ text, delay = 50, className = "" }: Typ
 
   useEffect(() => {
     if (!isReady) return;
-    
-    setDisplayedText("");
+
+    if (displayedText && text !== displayedText) {
+      setIsDeleting(true);
+      setIsTyping(true);
+      let currentText = displayedText;
+      const deleteTimer = setInterval(() => {
+        if (currentText.length > 0) {
+          currentText = currentText.slice(0, -1);
+          setDisplayedText(currentText);
+        } else {
+          clearInterval(deleteTimer);
+          setIsDeleting(false);
+          startTyping();
+        }
+      }, delay);
+
+      return () => clearInterval(deleteTimer);
+    } else {
+      startTyping();
+    }
+  }, [text, delay, isReady]);
+
+  const startTyping = () => {
+    setIsTyping(true);
     let currentIndex = 0;
     const typingTimer = setInterval(() => {
       if (currentIndex < text.length) {
@@ -32,29 +56,28 @@ export default function TypewriterText({ text, delay = 50, className = "" }: Typ
         currentIndex++;
       } else {
         clearInterval(typingTimer);
+        setIsTyping(false);
       }
     }, delay);
 
-    return () => {
-      clearInterval(typingTimer);
-    };
-  }, [text, delay, isReady]);
+    return () => clearInterval(typingTimer);
+  };
 
   useEffect(() => {
     const caretTimer = setInterval(() => {
       setShowCaret(prev => !prev);
     }, 530);
 
-    return () => {
-      clearInterval(caretTimer);
-    };
+    return () => clearInterval(caretTimer);
   }, []);
 
   return (
-    <span className={className}>
-      {displayedText}
+    <span className={`relative ${className}`}>
+      <span className="transition-opacity duration-300">
+        {displayedText}
+      </span>
       <span 
-        className={`${showCaret ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`}
+        className={`ml-0.5 inline-block transition-opacity duration-150 ${(showCaret && (isTyping || isDeleting)) ? 'opacity-100' : 'opacity-0'}`}
         aria-hidden="true"
       >
         |

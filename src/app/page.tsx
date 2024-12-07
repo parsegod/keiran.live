@@ -11,17 +11,34 @@ import {
   IconMail
 } from "@tabler/icons-react";
 import TypewriterText from "@/components/TypewriterText";
+import { useState, useEffect } from "react";
 
 const quotes = [
-  "Normalise writing software and web backend in Python",
   "Writing software, one error at a time",
   "Hyprland, the one true window manager",
   "Neovim is genuinely my favourite piece of software in the world",
   "{ text: undefined }",
+  "Embracing the chaos of concurrent programming",
+  "Git push --force",
+  "404: Sleep not found",
+  "Tabs vs. Spaces: The eternal debate",
+  "I speak fluent binary... 01101010 01101111 01101011 01100101",
+  "Recursion: See 'Recursion'",
+  "There's no place like 127.0.0.1",
   ". . ."
 ];
 
 export default function Home() {
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentQuoteIndex((prev) => (prev + 1) % quotes.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="space-y-16">
@@ -80,10 +97,13 @@ export default function Home() {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="text-xl text-zinc-400 max-w-2xl text-center"
           >
-            <TypewriterText
-              text={quotes[Math.floor(Math.random() * quotes.length)]}
-              delay={40}
-            />
+            <div className="mt-4">
+              <TypewriterText 
+                text={quotes[currentQuoteIndex]} 
+                className="text-lg text-zinc-400"
+                delay={40}
+              />
+            </div>
           </motion.div>
 
           <motion.div 

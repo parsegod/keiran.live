@@ -38,23 +38,25 @@ func main() {
 
 	cwd, err := os.Getwd()
 	if err != nil {
-		fmt.Printf(`{"error": "%s"}`, err)
+		json.NewEncoder(os.Stdout).Encode(map[string]string{"error": err.Error()})
 		os.Exit(1)
 	}
 
 	pythonScript := filepath.Join(cwd, "src", "app", "api", "python", "e-z.py")
 
-	output, err := exec.Command(pythonCmd, pythonScript, os.Args[1]).Output()
+	cmd := exec.Command(pythonCmd, pythonScript, os.Args[1])
+	cmd.Stderr = os.Stderr
+	output, err := cmd.Output()
 	if err != nil {
-		fmt.Printf(`{"error": "Failed to execute Python script: %s"}`, err)
+		json.NewEncoder(os.Stdout).Encode(map[string]string{"error": "Failed to execute Python script: " + err.Error()})
 		os.Exit(1)
 	}
 
 	var userData UserData
 	if err := json.Unmarshal(output, &userData); err != nil {
-		fmt.Printf(`{"error": "Failed to unmarshal data: %s"}`, err)
+		json.NewEncoder(os.Stdout).Encode(map[string]string{"error": "Failed to unmarshal data: " + err.Error()})
 		os.Exit(1)
 	}
 
-	fmt.Println(string(output))
+	json.NewEncoder(os.Stdout).Encode(userData)
 }
