@@ -100,7 +100,7 @@ function AnalyticsContent() {
   }, [code, mounted, fetchAnalytics]);
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-200">
+    <div className="min-h-screen text-neutral-200">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex items-center gap-2">
           <Link
@@ -200,10 +200,6 @@ function AnalyticsContent() {
                       <p className="text-sm text-neutral-400">Created</p>
                       <p>{formatDate(analytics.createdAt)}</p>
                     </div>
-                    <div>
-                      <p className="text-sm text-neutral-400">Last Click</p>
-                      <p>{formatDate(analytics.lastClickedAt)}</p>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -228,6 +224,9 @@ function AnalyticsContent() {
                   <div className="flex items-center gap-4 rounded-lg border border-neutral-800 bg-neutral-950 p-4">
                     <div className="rounded-full bg-green-500/20 p-3">
                       <IconLink size={24} className="text-green-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-neutral-400">More coming soon</p>
                     </div>
                   </div>
                 </div>
