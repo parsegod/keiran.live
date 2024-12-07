@@ -42,7 +42,6 @@ export default function URLShortener() {
     setAnalytics(null);
 
     const payload = { url };
-    console.log('Sending request with payload:', payload);
 
     try {
       const response = await fetch("/api/shorten", {
@@ -53,9 +52,7 @@ export default function URLShortener() {
         body: JSON.stringify(payload),
       });
 
-      console.log('Response status:', response.status);
       const data = await response.json();
-      console.log('Response data:', data);
       
       if (!response.ok) {
         throw new Error(data.error || "Failed to shorten URL");
@@ -64,7 +61,6 @@ export default function URLShortener() {
       setShortUrl(data.shortUrl);
       setShortCode(data.code);
       
-      // Fetch initial analytics
       await fetchAnalytics(data.code);
     } catch (err) {
       console.error('Error in handleSubmit:', err);
@@ -79,7 +75,7 @@ export default function URLShortener() {
 
     const interval = setInterval(() => {
       fetchAnalytics(shortCode);
-    }, 30000); // Refresh every 30 seconds
+    }, 30000);
 
     return () => clearInterval(interval);
   }, [shortCode]);

@@ -182,12 +182,12 @@ function AnalyticsContent() {
                     <p className="text-sm text-neutral-400">Shortened URL</p>
                     <div className="flex items-center gap-2">
                       <a
-                        href={`https://keiran.live/l/${analytics.code}`}
+                        href={`https://keiran.live/s/${analytics.code}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-400 hover:text-blue-300"
                       >
-                        keiran.live/l/{analytics.code}
+                        keiran.live/s/{analytics.code}
                       </a>
                       <IconExternalLink
                         size={16}
