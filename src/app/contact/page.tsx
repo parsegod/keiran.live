@@ -53,7 +53,7 @@ const socials: Social[] = [
   {
     name: "GitHub",
     icon: Github,
-    link: "https://github.com/KeiranScript",
+    link: "https://github.com/keitsuji",
     color: "text-purple-500",
     description: "Check out my open source contributions and projects"
   },
