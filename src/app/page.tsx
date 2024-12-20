@@ -113,7 +113,7 @@ export default function Home() {
             transition={{ delay: 0.5 }}
           >
             <Link 
-              href="https://github.com/keitsuji" 
+              href="https://github.com/keirim" 
               target="_blank"
               className="p-2 text-zinc-500 group transition-colors"
             >
